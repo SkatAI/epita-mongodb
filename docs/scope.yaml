@@ -1,0 +1,164 @@
+# Scope
+
+session_01:
+  topic: world of databases, and getting started on MongoDB
+  space_time: 3h 5/12 14-17 KB203
+  sections:
+    - title: course welcome and logistics
+      desc: welcome & intro
+      scope: |
+        - presentations
+        - curriculum
+        - spirit & time optimisation
+        - evaluation
+        - discord
+        - office hours
+        - get to know survey
+      todo: |
+        - get to know survey + discord + github
+    - title: a world of databases;
+      desc: difference between sql, mongodb and graph
+      scope: |
+        - key value store preliminary, json vs xml vs yaml
+        - flexible schema
+        - when to use sql vs nosql vs graph db
+      goal: clear picture of the why and what
+        - fill in from existing md
+        - md is in draft
+
+    - title: guided practice - hands on with mongodb
+      desc: create a collection, insert and update some documents, run basic queries
+      scope: |
+        - understand diff of cluster location (local, cloud), CLI vs Compass vs CLI in Compass
+        - [guided] open an account on Atlas
+        - [guided] demo: how to query a mongodb database, load a dataset, some queries
+      practice: load and explore a small dataset (worldhits probably or something similar). answer set of questions
+      goal: get started with mongodb as a datastore
+      todo: everything
+
+    - title: MongoDb scuba diving
+      desc: an overview of mongodb, fast track
+      scope: |
+        - how mongo shines: whyand when to choose over sql
+        - collections, documents and embedded documents
+        - important notion flexible schema
+        - data types + BSON + equivalence JSON
+        - querying
+          - filtering
+          - projection
+          - lookups
+        - aggregation
+    - title: today's practice
+      desc: load a dataset on Atlas
+      scope:
+        - answer questions
+      todo: everything
+
+    - wrap up:
+      exit ticket: simple form on skatai with course, date, name (opt), comment
+      learning outcomes: |
+        - clear view of database landscape
+        - students understand the global lanscape of databases and when to use mongodb and neo4j
+        - understand main mongodb concepts
+        - do CRUD on mongodb
+      homework:
+        - install mongodb on local for windows and mac
+        - explore sample datasets on atlas
+
+session_02:
+  topic: Mongo Deep Dive
+  date: 3h 12/12 10-13 603
+  sections:
+    - title: last session recap
+      desc: recap of key points in last session
+      scope: |
+        - check install on local
+
+    - title: local install
+      desc: where is everything, how does it work?
+      scope: |
+        - know where the data is
+        - how to configure your local envt for mongodb
+        - a word on cloud solutions
+        - docker demo
+
+    - title: from SQL to Mongodb, direct equivalenc
+      desc: we explore specificities of MongoDB
+      scope: |
+        - key diffs in CRUD ops: `$lookup`, aggregation pipelines (GROUP BY), Nested/embedded documents
+        - document validation
+        - transactions and ACID properties
+        - data modifications: partial updates ($set, $inc etc.) and Array operations
+        - MongoDB Stored Procedures
+
+    - wrap up:
+      exit ticket: on skatai
+      learning outcomes: tbd
+      homework:
+        - install mongodb on local for windows and mac
+        - explore sample datasets on atlas
+  todo: everything
+
+session_03:
+  topic: Workshop on open food dataset
+  date: 3h 17/12 10-13 603
+  sections:
+    - title: workshop on open food
+
+session_04:
+  topic: getting started on Neo4j
+  date: 3h 17/12 14-17 602
+  sections:
+    - title: neo4j scuba diving
+
+session_05:
+  date: 3h 18/12 10-13 603
+  topic: deep dive into neo4j
+  sections:
+    - title: deep dive into neo4j
+
+session_06:
+  topic: Workshop on no4j
+  date: 3h 19/12 10-13 602
+  sections:
+    - title: workshop with neo4j
+
+# --------------------
+
+need to cover:
+  - mongodb:
+    level 1: similar to sql; CRUD; find, insert, update, joins, create
+    level 2: performance optimization; indexing; query plans,
+    level 3: cloud, sharding
+    schema design: embedding vs referencing, https://www.mongodb.com/developer/products/mongodb/mongodb-schema-design-best-practices/
+    time series: wouldd make a good IoT example
+    vector search: in mongodb, compare with weaviate
+    aggregation & indexing: see book on FARM @packt and example at  https://www.mongodb.com/developer/products/mongodb/optimizing-lookup-performance-using-power-of-indexing/
+    sharding vs repliccation: https://www.cloudactivelabs.com/en/blog/mongodb-replication-vs-sharding-when-to-choose-which
+    Concurrency Issues: how to deala nd prevent them
+    Data Validation Errors: hpw to validate the data before inserting it
+
+questions:
+  json vs document: |
+    - is a `document` exactly similar to a json record. what about jsonl.
+    - could we use yaml or XML
+  performance optimization: |
+    - how do you optimise mongodb database and collection perf
+
+datasets:
+  sample atlas datasets: https://www.mongodb.com/developer/products/atlas/atlas-sample-datasets/
+
+resources:
+  relational vs no sql: https://www.enterprisedb.com/choosing-mongodb-postgresql-cloud-database-solutions-guide
+  connect to mongodb on compass: https://www.mongodb.com/docs/compass/current/connect/
+  convert queries from SQL to mongoDB: up to somme complexity it's rerally the same see example
+  mongosh cheatsheet: https://learn.mongodb.com/learn/course/mongodb-shell-cheatsheet/main/mongodb-shell-cheatsheet
+  schema design: |
+    Schema Design Approaches – Relational vs. MongoDB
+    https://www.mongodb.com/developer/products/mongodb/mongodb-schema-design-best-practices/
+    Embedding vs. Referencing with $lookup
+    => many possible schema for given data and application
+  neo4tourism: https://chewbii.com/neo4tourism-a-framework-for-mobility-analysis-tourist-circulation-on-db-oriented-graph/
+bdpedia: |
+  http://b3d.bdpedia.fr/
+  http://b3d.bdpedia.fr/rech-exacte.html#s3-le-langage-d-interrogation-de-mongodb

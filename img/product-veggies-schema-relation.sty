@@ -1,0 +1,61 @@
+erDiagram
+    Product ||--o{ Nutrition : has
+    Product ||--|| NutriScore : rated_as
+    Product ||--|| ConsumeBy : expires_on
+    Product ||--o{ Vegetable : "is_a"
+    Vegetable ||--|| Location : grown_in
+    Vegetable ||--|| OrganicStatus : classified_as
+
+    Product {
+        string product_id PK
+        string name
+        string nutriscore_id FK "References NutriScore"
+        string consumeby_id FK "References ConsumeBy"
+        float price
+        date packaged_date
+    }
+
+    Nutrition {
+        string nutrition_id PK
+        string product_id FK "References Product"
+        float sugar_per_100g
+        float fat_per_100g
+        float protein_per_100g
+        float fiber_per_100g
+        float salt_per_100g
+    }
+
+    NutriScore {
+        string nutriscore_id PK
+        string score "A|B|C|D|E"
+        string color
+    }
+
+    ConsumeBy {
+        string consumeby_id PK
+        date expiry_date
+        int shelf_life_days
+    }
+
+    Vegetable {
+        string vegetable_id PK
+        string product_id FK "References Product"
+        string location_id FK "References Location"
+        string organic_status_id FK "References OrganicStatus"
+        string type
+        string season
+        float carbon_footprint
+    }
+
+    Location {
+        string location_id PK
+        string country
+        string region
+        float distance_km
+    }
+
+    OrganicStatus {
+        string organic_status_id PK
+        boolean is_organic
+        string certification
+    }

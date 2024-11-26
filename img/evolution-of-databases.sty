@@ -1,0 +1,45 @@
+%%
+graph TB
+    %% Main Timeline Nodes
+    R1970[/"1970s<br/>Relational Era"/]
+    R1980[/"1980s<br/>Relational Dominance"/]
+    R1990[/"1990s<br/>Object-Oriented Wave"/]
+    R2000[/"2000s<br/>NoSQL Revolution"/]
+    R2010[/"2010s<br/>NoSQL Maturity & Specialization"/]
+    R2020[/"2020s<br/>AI & Vector Era"/]
+
+    %% Connections between eras
+    R1970 --> R1980
+    R1980 --> R1990
+    R1990 --> R2000
+    R2000 --> R2010
+    R2010 --> R2020
+
+    %% Key developments for each era
+    R1970 --- D1970[Relational Model<br/>SQL Introduction<br/>Oracle Founded]
+    R1980 --- D1980[IBM DB2<br/>PostgreSQL Begins]
+    R1990 --- D1990[Object DBs<br/>MySQL<br/>XML DBs]
+
+    %% NoSQL and Modern developments
+    R2000 --- NoSQL[NoSQL Emergence]
+    NoSQL --> |Document|Mongo[<b>MongoDB<br/>2009</b>]
+    NoSQL --> |Graph|Neo4j[<b>Neo4j</b><br/>2009]
+    NoSQL --> |Column|Cassandra[Cassandra<br/>2008]
+
+    R2010 --- Modern[Modern DBs]
+    Modern --> |Time Series|TS[InfluxDB<br/>TimescaleDB]
+    Modern --> |Multi-Model|MM[ArangoDB<br/>OrientDB]
+
+    R2020 --- AI[AI-Era DBs]
+    AI --> |Vector|Vector[Pinecone<br/>Weaviate]
+    AI --> |Graph AI|GraphAI[Neo4j AuraDB<br/>TigerGraph]
+    AI --> |Hybrid|Hybrid[Vector-Enabled<br/>Traditional DBs]
+
+    %% Styling
+    classDef era fill:#30C,stroke:#FFF,stroke-width:2px
+    classDef type fill:#090,stroke:#FFF,stroke-width:1px
+    classDef db fill:#900,stroke:#FFF,stroke-width:1px
+
+    class R1970,R1980,R1990,R2000,R2010,R2020 era
+    class NoSQL,Modern,AI type
+    class Mongo,Neo4j,Cassandra,TS,MM,Vector,GraphAI,Hybrid db
