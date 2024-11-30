@@ -6,6 +6,7 @@
 # If your data is in JSON, you might want to do a local import to MongoDB first, then dump and restore
 
 next:
+  - welcome form
   - summarize doc for each topic below as lesson in mongodb deep dive
   - [S01] set practice on Atlas sample
   - [S01] missing some basic querying on db.
