@@ -1,129 +1,190 @@
 # Scope
 
+# on importing food dataset
+# For large datasets, always use mongorestore with BSON files rather than mongoimport with JSON
+# BSON is MongoDB's binary format and is much faster to process
+# If your data is in JSON, you might want to do a local import to MongoDB first, then dump and restore
+
+next:
+  - summarize doc for each topic below as lesson in mongodb deep dive
+  - [S01] set practice on Atlas sample
+  - [S01] missing some basic querying on db.
+  - [S02] from https://learn.mongodb.com/pages/learners-journey select topics
+    - CRUD in python
+      - notebook on CRUD over Atlas Sample
+    - aggregation, (30mn)
+      - [S02] set worksheet on food dataset for aggregation and querying
+
+      - can I use my atlas clusrer, do I need a bigger cluster
+    - indexes,
+    - schema design
+      - set worksheet on Airbnb data for schema design
+  - [S03] vector search
+
+outline:
+  session 01: mongodb on cloud. CRUD.
+  session 02: mongodb on local - advanced topics - airbnb
+  session 03: open food - vector search - in mongodb - quiz
+  session 04: graph db Neo4J - intro
+  session 05: graph db Neo4J
+  session 06: graph db Neo4J - quiz / workshop
+
+# ------------------------------------------------------------------------------
+# session 01
+# ------------------------------------------------------------------------------
+
 session_01:
   topic: world of databases, and getting started on MongoDB
   space_time: 3h 5/12 14-17 KB203
   sections:
-    - title: course welcome and logistics
+    - 🔴🔴🔴 title: 1.1 course welcome and logistics
       desc: welcome & intro
       scope: |
-        - presentations
-        - curriculum
-        - spirit & time optimisation
+        - course scope
         - evaluation
         - discord
         - office hours
         - get to know survey
       todo: |
-        - get to know survey + discord + github
-    - title: a world of databases;
-      desc: difference between sql, mongodb and graph
-      scope: |
-        - key value store preliminary, json vs xml vs yaml
-        - flexible schema
-        - when to use sql vs nosql vs graph db
-      goal: clear picture of the why and what
-        - fill in from existing md
-        - md is in draft
+        - get to know survey + discord
+        - md
+        - thinking of slides for the 1st intro. as they will not be included in the repo or skatai.com
 
-    - title: guided practice - hands on with mongodb
+    - 🔴🔴🔴 title: 1.2 A world of databases;
+      doc: S01.02.intro-nosql-graph-databases.md
+      desc: difference between sql, mongodb and graph, add vector
+      scope: |
+        - DBMS & history of databases
+        - Types of databases
+        - relational vs non relation database
+        - flexible schema in NoSQL databases
+        - graph databases
+        - conclusion
+      goal: clear picture of the what for why
+      todo: |
+        - proof read S01.02 doc
+
+    - 🔴🔴🔴 title: 1.3 guided practice - hands on with mongodb
       desc: create a collection, insert and update some documents, run basic queries
       scope: |
         - understand diff of cluster location (local, cloud), CLI vs Compass vs CLI in Compass
         - [guided] open an account on Atlas
         - [guided] demo: how to query a mongodb database, load a dataset, some queries
-      practice: load and explore a small dataset (worldhits probably or something similar). answer set of questions
+        - follow https://www.mongodb.com/docs/languages/python/pymongo-driver/current/aggregation/aggregation-tutorials/
+      practice: |
+        - load and explore a small dataset (worldhits probably or something similar).
+        - answer set of questions
       goal: get started with mongodb as a datastore
-      todo: everything
+      todo: |
+        - learning by doing querying on sample dataset:
+        - notebook to work with Atlas sample dataset
 
-    - title: MongoDb scuba diving
-      desc: an overview of mongodb, fast track
-      scope: |
-        - how mongo shines: whyand when to choose over sql
-        - collections, documents and embedded documents
-        - important notion flexible schema
-        - data types + BSON + equivalence JSON
-        - querying
-          - filtering
-          - projection
-          - lookups
-        - aggregation
-    - title: today's practice
-      desc: load a dataset on Atlas
+    - 🔴🔴🔴 title: Recap on Querying in MongoDB
+      desc: a document with the major operators and equivalence with SQL
       scope:
-        - answer questions
+        - list of queries
       todo: everything
 
-    - wrap up:
+    - 🔴🔴🔴 wrap up:
       exit ticket: simple form on skatai with course, date, name (opt), comment
       learning outcomes: |
         - clear view of database landscape
         - students understand the global lanscape of databases and when to use mongodb and neo4j
         - understand main mongodb concepts
         - do CRUD on mongodb
+        - what's next
       homework:
         - install mongodb on local for windows and mac
         - explore sample datasets on atlas
 
+# ------------------------------------------------------------------------------
+# session 02
+# ------------------------------------------------------------------------------
+
 session_02:
-  topic: Mongo Deep Dive
+  topic: Mongo Deeper Dive
   date: 3h 12/12 10-13 603
   sections:
-    - title: last session recap
-      desc: recap of key points in last session
+    - title: 2.01 last session recap
+      desc: recap of key points in last session - equivalence SQL vs NoSQL for querying
       scope: |
-        - check install on local
-
-    - title: local install
-      desc: where is everything, how does it work?
-      scope: |
-        - know where the data is
-        - how to configure your local envt for mongodb
-        - a word on cloud solutions
-        - docker demo
-
-    - title: from SQL to Mongodb, direct equivalenc
-      desc: we explore specificities of MongoDB
-      scope: |
+        - querying, a dash of theory
+          - filtering
+          - projection
+          - lookups
         - key diffs in CRUD ops: `$lookup`, aggregation pipelines (GROUP BY), Nested/embedded documents
         - document validation
+
+    - title: 2.02 local install
+      desc: where is everything, how does it work?
+      scope: |
+        - check install on local
+        - know where the data is
+        - how to configure your local envt for mongodb
+
+    - title: 2.03 MongoDb deep dive
+      desc: an overview of mongodb, fast track
+      scope: |
+        - how mongo shines: why and when to choose over sql
+        - collections, documents and embedded documents
+        - important notion flexible schema
+        - data types + BSON + equivalence JSON
+        - aggregation : querying
         - transactions and ACID properties
         - data modifications: partial updates ($set, $inc etc.) and Array operations
         - MongoDB Stored Procedures
 
+    - title: Practice MongoDb and the airbnb dataset
+      desc: import the airbnb dataset into a MongoDB
+      scope: |
+        - schema design - to optimize query time
+        - create schema, collections, etc
+        - import data from csv, json
+        - query
+
     - wrap up:
       exit ticket: on skatai
       learning outcomes: tbd
-      homework:
-        - install mongodb on local for windows and mac
-        - explore sample datasets on atlas
+      homework: tbd
   todo: everything
 
+# ------------------------------------------------------------------------------
+# session 03
+# ------------------------------------------------------------------------------
 session_03:
-  topic: Workshop on open food dataset
+  topic: vector search
   date: 3h 17/12 10-13 603
   sections:
-    - title: workshop on open food
+    - title: lecture - vector search
+    - title: guided practice - vector search in mongdb
+    - title: workshop on vector search
 
+# ------------------------------------------------------------------------------
+# session 02
+# ------------------------------------------------------------------------------
 session_04:
   topic: getting started on Neo4j
   date: 3h 17/12 14-17 602
   sections:
     - title: neo4j scuba diving
 
+# ------------------------------------------------------------------------------
+# session 02
+# ------------------------------------------------------------------------------
 session_05:
   date: 3h 18/12 10-13 603
   topic: deep dive into neo4j
   sections:
     - title: deep dive into neo4j
 
+# ------------------------------------------------------------------------------
+# session 02
+# ------------------------------------------------------------------------------
 session_06:
   topic: Workshop on no4j
   date: 3h 19/12 10-13 602
   sections:
     - title: workshop with neo4j
-
-# --------------------
 
 need to cover:
   - mongodb:
@@ -131,12 +192,12 @@ need to cover:
     level 2: performance optimization; indexing; query plans,
     level 3: cloud, sharding
     schema design: embedding vs referencing, https://www.mongodb.com/developer/products/mongodb/mongodb-schema-design-best-practices/
-    time series: wouldd make a good IoT example
+    time series: would make a good IoT example
     vector search: in mongodb, compare with weaviate
     aggregation & indexing: see book on FARM @packt and example at  https://www.mongodb.com/developer/products/mongodb/optimizing-lookup-performance-using-power-of-indexing/
-    sharding vs repliccation: https://www.cloudactivelabs.com/en/blog/mongodb-replication-vs-sharding-when-to-choose-which
-    Concurrency Issues: how to deala nd prevent them
-    Data Validation Errors: hpw to validate the data before inserting it
+    sharding vs replication: https://www.cloudactivelabs.com/en/blog/mongodb-replication-vs-sharding-when-to-choose-which
+    Concurrency Issues: how to deal and prevent them
+    Data Validation Errors: how to validate the data before inserting it
 
 questions:
   json vs document: |
@@ -149,6 +210,10 @@ datasets:
   sample atlas datasets: https://www.mongodb.com/developer/products/atlas/atlas-sample-datasets/
 
 resources:
+  mongodb is webscale: https://www.youtube.com/watch?v=b2F-DItXtZs
+  myth about mongodb: https://www.mongodb.com/developer/products/mongodb/everything-you-know-is-wrong/
+  mongodb university: https://learn.mongodb.com/
+  glossary: https://www.mongodb.com/docs/manual/reference/glossary/
   relational vs no sql: https://www.enterprisedb.com/choosing-mongodb-postgresql-cloud-database-solutions-guide
   connect to mongodb on compass: https://www.mongodb.com/docs/compass/current/connect/
   convert queries from SQL to mongoDB: up to somme complexity it's rerally the same see example

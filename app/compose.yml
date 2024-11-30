@@ -1,0 +1,16 @@
+services:
+  epita-mongodb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: EpitaMongoDB
+    tty: true
+    stdin_open: true
+    extra_hosts:
+          - "host.docker.internal:host-gateway"
+    volumes:
+      - .:/app
+      - ./../data:/app/data
+    env_file:
+      - .env
+    command: ["/bin/bash"]

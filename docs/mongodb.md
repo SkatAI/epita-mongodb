@@ -4,50 +4,13 @@ connection: connecting to a cluster
     different tools to work with mongodb: CLI and Compass
     different cluster location: local or cloud atlas
 languages: working with mongodb in different langages from python to whatever
-
-
-
 ---
 
 # MongoDB
 
-<https://www.mongodb.com/try/download/community>
 
-download from
 
-<https://fastdl.mongodb.org/osx/mongodb-macos-arm64-8.0.3.tgz>
-
-MongoDB Community Edition is indeed the free, open-source version of MongoDB that you can run locally on your machine. However, it's important to note that MongoDB Atlas is different - it's MongoDB's cloud database service. Think of it this way:
-
-MongoDB Community Edition = Self-hosted, runs on your computer
-MongoDB Atlas = Cloud-hosted service with both free and paid tiers
-
-For teaching purposes, I recommend installing both:
-
-MongoDB Community Edition - for understanding local database operations
-MongoDB Compass - the GUI tool that makes visualization and interaction easier for students
-
-Install on local
-
-```bash
-# First update Homebrew
-brew update
-
-# Install MongoDB Community Edition
-brew tap mongodb/brew
-brew install mongodb-community
-
-# Start MongoDB service
-brew services start mongodb-community
-```
-
-Then install MongoDB Compass (the GUI tool):
-
-Go to <https://www.mongodb.com/products/compass>
-Download the Intel or Apple Silicon version depending on your Mac
-Install it like any other Mac application
-
-then
+## Get started
 
 Part 2: Create Your First Collection (10 minutes)
 Let's create a fun little music playlist database!
@@ -104,31 +67,25 @@ In Compass to add a record put the fields after the {_id}
   "title": "Don't Stop Believin'",
   "artist": "Journey",
   "year": 1981,
-  "mood": "inspiring"
+  "mood": "inspiring",
+  "lastPlayed": new Date()
+}
+```
+
+```json
+{
+  "_id":{
+    "$oid":"6745ab6f0e0bbdab062667c7"
+    },
+    "title": "Happy",
+    "artist": "Pharrell Williams",
+    "year": 2013,
+    "mood": "joyful"
 }
 ```
 
 In compass query is also a json object
 
-## NoSQL terminology
-
-| MongoDB | SQL Database |
-|----------|--------------|
-| Database | Database |
-| Collection | Table |
-| Document | Record/Row |
-| Field | Column |
-| Index | Index |
-| Embedded Document | Foreign Key |
-| `$lookup` | JOIN |
-| `_id` | Primary Key |
-| Sharding | Partitioning |
-
-A document is a record, a row
-A Collection is a table
-A Fields is a Column
-
-Sharding is the process of splitting large datasets across multiple servers (shards) in MongoDB to ensure scalability and performance. It allows MongoDB to handle large amounts of data and high query loads by distributing the data across a cluster of servers.
 
 see <https://chatgpt.com/c/673f286f-3c44-800e-a533-7df1cb8d9da3>
 
@@ -189,7 +146,7 @@ db.users.insertMany([
 
 => TODO exercise on simple dataset
 
-### differences betwen SQL and MongoDB queries
+### differences between SQL and MongoDB queries
 
 Complex queries:
 
