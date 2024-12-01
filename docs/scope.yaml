@@ -189,6 +189,7 @@ session_06:
 
 need to cover:
   - mongodb:
+    Schema validation: in MongoDB allows you to enforce rules on the structure, fields, and data types of documents within a collection. You can create a collection with a validation rule using the db.createCollection() method
     level 1: similar to sql; CRUD; find, insert, update, joins, create
     level 2: performance optimization; indexing; query plans,
     level 3: cloud, sharding
