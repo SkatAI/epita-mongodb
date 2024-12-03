@@ -4,4 +4,4 @@ ipython==8.29.0
 python-dotenv==1.0.1
 pymongo==4.10.1
 requests
-beautifulsoup4=4.12.3
+beautifulsoup4==4.12.3

@@ -1,0 +1,51 @@
+flowchart TD
+    subgraph Input
+        tracks[(Spotify Tracks)]
+    end
+
+    subgraph Pipeline[Spotify Analysis Pipeline]
+        direction TB
+        m1["$match<br/>genre: 'pop'<br/>year >= 2020"]
+        
+        u["$unwind<br/>artists array"]
+        
+        g1["$group<br/>by artist<br/>avg popularity<br/>song count"]
+        
+        m2["$match<br/>song count > 5"]
+        
+        lu["$lookup<br/>join with<br/>artist details"]
+        
+        p["$project<br/>artist name<br/>avg popularity<br/>top songs<br/>followers"]
+        
+        s["$sort<br/>by avg<br/>popularity"]
+        
+        l["$limit<br/>top 10"]
+    end
+
+    subgraph Output
+        result[("Top 10<br/>Pop Artists<br/>Analysis")]
+    end
+
+    tracks --> m1
+    m1 --> u
+    u --> g1
+    g1 --> m2
+    m2 --> lu
+    lu --> p
+    p --> s
+    s --> l
+    l --> result
+
+    style tracks fill:#FFE5E5,stroke:#FF4D4D
+    style m1 fill:#FFD1D1,stroke:#FF0000
+    style u fill:#FFE5CC,stroke:#FF8000
+    style g1 fill:#FFFFCC,stroke:#FFD700
+    style m2 fill:#E5FFCC,stroke:#80FF00
+    style lu fill:#CCFFE5,stroke:#00FF80
+    style p fill:#CCFFFF,stroke:#00FFFF
+    style s fill:#CCE5FF,stroke:#0080FF
+    style l fill:#CCE5FF,stroke:#0080FF
+    style result fill:#E5CCFF,stroke:#8000FF
+    
+    classDef pipelineStage font-size:14px,padding:10px
+    class m1,u,g1,m2,lu,p,s,l pipelineStage

@@ -38,7 +38,7 @@ session_01:
   topic: world of databases, and getting started on MongoDB
   space_time: 3h 5/12 14-17 KB203
   sections:
-    - 🔴🔴🔴 title: 1.1 course welcome and logistics
+    - ✅ title: 1.1 course welcome and logistics
       desc: welcome & intro
       scope: |
         - course scope
@@ -51,7 +51,7 @@ session_01:
         - md
         - thinking of slides for the 1st intro. as they will not be included in the repo or skatai.com
 
-    - 🔴🔴🔴 title: 1.2 A world of databases;
+    - ✅ title: 1.2 A world of databases;
       doc: S01.02.intro-nosql-graph-databases.md
       desc: difference between sql, mongodb and graph, add vector
       scope: |
@@ -80,11 +80,10 @@ session_01:
         - learning by doing querying on sample dataset:
         - notebook to work with Atlas sample dataset
 
-    - 🔴🔴🔴 title: Recap on Querying in MongoDB
-      desc: a document with the major operators and equivalence with SQL
-      scope:
-        - list of queries
-      todo: everything
+    - 🔴🔴🔴 title: 1.4 extra practice
+      desc: extra practice on another Atlas sample database
+        could take the form of a quiz on skatai
+        AMRAP lol
 
     - 🔴🔴🔴 wrap up:
       exit ticket: simple form on skatai with course, date, name (opt), comment
@@ -123,14 +122,14 @@ session_02:
         - know where the data is
         - how to configure your local envt for mongodb
 
-    - title: 2.03 MongoDb deep dive
+    - title: 2.03 MongoDb deeper dive
       desc: an overview of mongodb, fast track
       scope: |
         - how mongo shines: why and when to choose over sql
+        - aggregation pipelines
         - collections, documents and embedded documents
         - important notion flexible schema
         - data types + BSON + equivalence JSON
-        - aggregation : querying
         - transactions and ACID properties
         - data modifications: partial updates ($set, $inc etc.) and Array operations
         - MongoDB Stored Procedures

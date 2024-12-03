@@ -13,6 +13,15 @@ RUN apt-get update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install required dependencies and add MongoDB GPG key
+# RUN apt-get update && apt-get install -y wget gnupg && \
+#     wget -qO - https://pgp.mongodb.com/server-6.0.asc | gpg --dearmor -o /usr/share/keyrings/mongodb-server-6.0.gpg && \
+#     echo "deb [signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg] https://repo.mongodb.org/apt/debian bullseye/mongodb-org/6.0 main" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list && \
+#     apt-get update && \
+#     apt-get install -y mongosh && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/*
+
 
 # Upgrade pip
 RUN pip3 install --upgrade pip
