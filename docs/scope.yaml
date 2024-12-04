@@ -46,10 +46,6 @@ session_01:
         - discord
         - office hours
         - get to know survey
-      todo: |
-        - get to know survey + discord
-        - md
-        - thinking of slides for the 1st intro. as they will not be included in the repo or skatai.com
 
     - ✅ title: 1.2 A world of databases;
       doc: S01.02.intro-nosql-graph-databases.md
@@ -62,40 +58,23 @@ session_01:
         - graph databases
         - conclusion
       goal: clear picture of the what for why
-      todo: |
-        - proof read S01.02 doc
 
-    - 🔴🔴🔴 title: 1.3 guided practice - hands on with mongodb
+    - ✅ title: 1.3 guided practice - hands on with mongodb
       desc: create a collection, insert and update some documents, run basic queries
       scope: |
         - understand diff of cluster location (local, cloud), CLI vs Compass vs CLI in Compass
         - [guided] open an account on Atlas
         - [guided] demo: how to query a mongodb database, load a dataset, some queries
-        - follow https://www.mongodb.com/docs/languages/python/pymongo-driver/current/aggregation/aggregation-tutorials/
       practice: |
-        - load and explore a small dataset (worldhits probably or something similar).
+        - load and explore a small dataset (Movies).
         - answer set of questions
       goal: get started with mongodb as a datastore
-      todo: |
-        - learning by doing querying on sample dataset:
-        - notebook to work with Atlas sample dataset
 
     - 🔴🔴🔴 title: 1.4 extra practice
       desc: extra practice on another Atlas sample database
         could take the form of a quiz on skatai
-        AMRAP lol
-
-    - 🔴🔴🔴 wrap up:
-      exit ticket: simple form on skatai with course, date, name (opt), comment
-      learning outcomes: |
-        - clear view of database landscape
-        - students understand the global lanscape of databases and when to use mongodb and neo4j
-        - understand main mongodb concepts
-        - do CRUD on mongodb
-        - what's next
-      homework:
-        - install mongodb on local for windows and mac
-        - explore sample datasets on atlas
+        AMRAP 🤪
+      todo: everything, on sample analytics dataset
 
 # ------------------------------------------------------------------------------
 # session 02
@@ -105,7 +84,7 @@ session_02:
   topic: Mongo Deeper Dive
   date: 3h 12/12 10-13 603
   sections:
-    - title: 2.01 last session recap
+    - 🔴🔴🔴 title: 2.01 last session recap
       desc: recap of key points in last session - equivalence SQL vs NoSQL for querying
       scope: |
         - querying, a dash of theory
@@ -115,26 +94,43 @@ session_02:
         - key diffs in CRUD ops: `$lookup`, aggregation pipelines (GROUP BY), Nested/embedded documents
         - document validation
 
-    - title: 2.02 local install
-      desc: where is everything, how does it work?
+    - 🔴🔴🔴 title: 2.02 MongoDb aggregation pipelines
+      desc: More complex queries with aggregation pipelines
       scope: |
-        - check install on local
-        - know where the data is
-        - how to configure your local envt for mongodb
+        - aggregation pipelines
+          - follow https://www.mongodb.com/docs/languages/python/pymongo-driver/current/aggregation/aggregation-tutorials/
 
-    - title: 2.03 MongoDb deeper dive
-      desc: an overview of mongodb, fast track
+    - 🔴🔴🔴 title: 2.03 MongoDb aggregation pipelines - practice
+      desc: More complex queries with aggregation pipelines
+      scope: |
+        - aggregation pipelines
+          - follow https://www.mongodb.com/docs/languages/python/pymongo-driver/current/aggregation/aggregation-tutorials/
+      todo: |
+        - practice aggregation pipelines over the movies database
+        gradually build a pipeline with target: Find all movies with their comments and commenter details, showing only movies that have at least one comment, sorted by number of comments.
+
+    - 🔴🔴🔴 title: 2.04 MongoDb deeper dive
+      desc: More complex queries with schema design validation and design
       scope: |
         - how mongo shines: why and when to choose over sql
-        - aggregation pipelines
-        - collections, documents and embedded documents
-        - important notion flexible schema
+        - schema
+          - schema design - to optimize query time
+          - relations
+          - schema validation
+        also:
         - data types + BSON + equivalence JSON
         - transactions and ACID properties
         - data modifications: partial updates ($set, $inc etc.) and Array operations
         - MongoDB Stored Procedures
 
-    - title: Practice MongoDb and the airbnb dataset
+    - 🔴🔴🔴 title: 2.04 MongoDb deeper dive
+      desc: More complex queries with schema design validation and design
+      scope: |
+
+
+
+
+    - 🔴🔴🔴 title: Practice MongoDb and the airbnb dataset
       desc: import the airbnb dataset into a MongoDB
       scope: |
         - schema design - to optimize query time

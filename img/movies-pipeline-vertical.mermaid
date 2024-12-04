@@ -1,0 +1,47 @@
+flowchart TD
+subgraph Input
+movies[("Movies Collection                             ")]
+end
+
+subgraph Pipeline["Movie Analysis Pipeline                                          "]
+direction TB
+m1["$match                                    <br/>imdb.rating > 8.0<br/>year >= 2000"] --- m1note["Filters recent highly rated movies"]
+
+u["$unwind                                    <br/>genres array"] --- unote["Splits movies with multiple genres<br/>into separate documents"]
+
+g1["$group                                    <br/>by genre<br/>avg rating<br/>movie count<br/>top directors"] --- gnote["Groups movies by genre and<br/>calculates aggregate statistics"]
+
+m2["$match                                    <br/>movie count >= 5"] --- m2note["Filters genres with<br/>at least 5 movies"]
+
+p["$project                                   <br/>genre<br/>avg rating<br/>top movies<br/>director stats"] --- pnote["Shapes output by selecting<br/>and renaming fields"]
+
+s["$sort                                      <br/>by avg<br/>rating DESC"] --- snote["Orders genres by<br/>average rating"]
+
+l["$limit                                     <br/>top 5 genres"] --- lnote["Returns only top 5 results"]
+end
+
+subgraph Output
+result[("Top 5 Highest-Rated Genres Analysis                    ")]
+end
+
+movies --> m1
+m1 --> u
+u --> g1
+g1 --> m2
+m2 --> p
+p --> s
+s --> l
+l --> result
+
+style movies fill:#FFE5E5,stroke:#FF4D4D,color:#FF0000,font-weight:bold
+style m1 fill:#FFD1D1,stroke:#FF0000,color:#CC0000,font-weight:bold
+style u fill:#FFE5CC,stroke:#FF8000,color:#CC6600,font-weight:bold
+style g1 fill:#FFFFCC,stroke:#FFD700,color:#806600,font-weight:bold
+style m2 fill:#E5FFCC,stroke:#80FF00,color:#336600,font-weight:bold
+style p fill:#CCFFFF,stroke:#00FFFF,color:#006666,font-weight:bold
+style s fill:#CCE5FF,stroke:#0080FF,color:#003399,font-weight:bold
+style l fill:#CCE5FF,stroke:#0080FF,color:#003399,font-weight:bold
+style result fill:#E5CCFF,stroke:#8000FF,color:#4C0099,font-weight:bold
+
+classDef note fill:white,stroke:gray,color:black
+class m1note,unote,gnote,m2note,pnote,snote,lnote note
