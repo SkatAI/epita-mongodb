@@ -91,8 +91,6 @@ cursor = db.movies.find(
 for movie in cursor:
     print(movie)
 
-
-
 # ---------------------
 print("9. Query Movies with a Range of Years: Retrieve movies released between 1990 and 2000, showing the title and year.")
 
