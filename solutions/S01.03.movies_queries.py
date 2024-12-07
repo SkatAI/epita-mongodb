@@ -88,6 +88,11 @@ cursor = db.movies.find(
     {"_id": 0, "title": 1, "imdb": 1}  # Projection: include title and IMDb rating
 ).sort("imdb.rating", -1).limit(5)  # Sort by IMDb rating (ascending) and limit to 5 results
 
+cursor = db.movies.find(
+    {},  # No filter: query all movies
+    {"_id": 0, "title": 1, "imdb": 1}  # Projection: include title and IMDb rating
+).sort("imdb.rating", -1).limit(5)  # Sort by IMDb rating (ascending) and limit to 5 results
+
 for movie in cursor:
     print(movie)
 

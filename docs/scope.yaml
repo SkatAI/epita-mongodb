@@ -127,6 +127,18 @@ session_02:
       desc: More complex queries with schema design validation and design
       scope: |
 
+## Demo : LLM query writing
+
+[TODO]
+
+Give the LLM a prompt with the schema as background info
+
+Ask it to explain the query
+
+Test it
+
+Challenge it
+
 
 
 
