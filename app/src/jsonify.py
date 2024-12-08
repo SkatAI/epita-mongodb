@@ -46,34 +46,49 @@ if __name__ == "__main__":
     # load the csv file into a dataframe
     df = pd.read_csv(file)
 
+    df['dim'] = df.height * df.circumference
+    df['geo_dups'] = df['geo_point_2d'].map(df['geo_point_2d'].value_counts())
+
+    df.sort_values(by = ['geo_dups','dim'], ascending=[False, False] , inplace = True)
+    df.reset_index(inplace = True, drop = True)
+
+    df.drop(columns= ['geo_dups','dim'], inplace = False)
+
+
+    ## make sure duplicates geolocs are included
+
     # --------------------------------------------------------
     # flat schema
     # --------------------------------------------------------
     trees = []
-
-    for i, d in tqdm(df.iterrows()):
+    for i, d in tqdm(df.head(10000).sample(frac = 1).iterrows()):
         tree = build(df.columns, {}, d)
         trees.append(tree)
 
-    # create json filename by replacing .csv with .json
-    output_file = "./data/trees_flat.json"
+    output_file = "./data/trees_flat_10K.json"
     with open(output_file, "w") as f:
         json.dump(trees, f, indent=4,  ensure_ascii=False)
 
-    output_file = "./data/trees_flat_1K.json"
-    with open(output_file, "w") as f:
-        json.dump(trees[:1000], f, indent=4,  ensure_ascii=False)
+    # create json filename by replacing .csv with .json
+    # output_file = "./data/trees_flat.json"
+    # with open(output_file, "w") as f:
+    #     json.dump(trees, f, indent=4,  ensure_ascii=False)
 
-    output_file = "./data/trees_flat_100.json"
-    with open(output_file, "w") as f:
-        json.dump(trees[:100], f, indent=4,  ensure_ascii=False)
+    # output_file = "./data/trees_flat_1K.json"
+    # with open(output_file, "w") as f:
+    #     json.dump(trees[:1000], f, indent=4,  ensure_ascii=False)
+
+
+    # output_file = "./data/trees_flat_100.json"
+    # with open(output_file, "w") as f:
+    #     json.dump(trees[:100], f, indent=4,  ensure_ascii=False)
 
     # convert to ndjson
 
-    with open("./data/trees_flat.json", "r") as infile, open("trees_flat.ndjson", "w") as outfile:
-        data = json.load(infile)
-        for item in data:
-            outfile.write(json.dumps(item) + "\n")
+    # with open("./data/trees_flat.json", "r") as infile, open("trees_flat.ndjson", "w") as outfile:
+    #     data = json.load(infile)
+    #     for item in data:
+    #         outfile.write(json.dumps(item) + "\n")
 
 
 
