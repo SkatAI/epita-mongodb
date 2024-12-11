@@ -70,12 +70,6 @@ session_01:
         - answer set of questions
       goal: get started with mongodb as a datastore
 
-    - 🔴🔴🔴 title: 1.4 extra practice
-      desc: extra practice on another Atlas sample database
-        could take the form of a quiz on skatai
-        AMRAP 🤪
-      todo: everything, on sample analytics dataset
-
 # ------------------------------------------------------------------------------
 # session 02
 # ------------------------------------------------------------------------------
@@ -84,13 +78,12 @@ session_02:
   topic: Mongo Deeper Dive
   date: 3h 12/12 10-13 603
   sections:
-    - 🔴🔴🔴 title: 2.01 last session recap
+    - ✅ title: 2.01 last session recap
       desc: recap of key points in last session - equivalence SQL vs NoSQL for querying
       scope: |
-        - querying, a dash of theory
+        - querying,
           - filtering
           - projection
-          - lookups
         - key diffs in CRUD ops: `$lookup`, aggregation pipelines (GROUP BY), Nested/embedded documents
         - document validation
 
@@ -98,19 +91,22 @@ session_02:
       desc: More complex queries with aggregation pipelines
       scope: |
         - aggregation pipelines
-          - follow https://www.mongodb.com/docs/languages/python/pymongo-driver/current/aggregation/aggregation-tutorials/
+        - $match, $group, $unwind, $addFields, $out
+        - joins with $lookup
 
-    - 🔴🔴🔴 title: 2.03 MongoDb aggregation pipelines - practice
+      todo: |
+        illustrate each operator with examples
+        add exercises for each one
+
+    - 🔴🔴🔴 title: 2.03 MongoDb aggregation pipelines - practice - [optional]
       desc: More complex queries with aggregation pipelines
       scope: |
-        - aggregation pipelines
-          - follow https://www.mongodb.com/docs/languages/python/pymongo-driver/current/aggregation/aggregation-tutorials/
+        - aggregation pipelines queries on sample_analytics
       todo: |
-        - practice aggregation pipelines over the movies database
-        gradually build a pipeline with target: Find all movies with their comments and commenter details, showing only movies that have at least one comment, sorted by number of comments.
+        - practice aggregation pipelines over the sample_analytics database
 
     - 🔴🔴🔴 title: 2.04 MongoDb deeper dive
-      desc: More complex queries with schema design validation and design
+      desc: More complex queries with schema design and validation
       scope: |
         - how mongo shines: why and when to choose over sql
         - schema
@@ -122,10 +118,21 @@ session_02:
         - transactions and ACID properties
         - data modifications: partial updates ($set, $inc etc.) and Array operations
         - MongoDB Stored Procedures
+      todo: |
+        - the TODOs
+        - proof read after Schema design patterns
+        - add examples and exercises
 
-    - 🔴🔴🔴 title: 2.04 MongoDb deeper dive
-      desc: More complex queries with schema design validation and design
+
+    - 🔴🔴🔴 title: 2.05 MongoDb trees worksheet
+      desc: Build a database of trees and gardens in Paris
       scope: |
+        - schema design with nested or flat
+        - some querying
+        - schema validator
+        - loading a dataset with mongoimport
+        - convert to geoJSON
+      todo: find a way to grade the worksheet
 
 ## Demo : LLM query writing
 
@@ -196,10 +203,8 @@ session_06:
 
 need to cover:
   - mongodb:
-    Schema validation: in MongoDB allows you to enforce rules on the structure, fields, and data types of documents within a collection. You can create a collection with a validation rule using the db.createCollection() method
     level 1: similar to sql; CRUD; find, insert, update, joins, create
-    level 2: performance optimization; indexing; query plans,
-    level 3: cloud, sharding
+    level 2: performance optimization; indexing; **query plans**,
     schema design: embedding vs referencing, https://www.mongodb.com/developer/products/mongodb/mongodb-schema-design-best-practices/
     time series: would make a good IoT example
     vector search: in mongodb, compare with weaviate
