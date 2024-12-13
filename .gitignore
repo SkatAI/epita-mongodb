@@ -1,7 +1,7 @@
 # Ignored Directories
 .ipynb_checkpoints/
 node_modules/
-data/
+data-local/
 wip/
 
 # Ignored File Types
@@ -9,7 +9,6 @@ wip/
 *.xlsx
 *.pkl
 *.log
-*.zip
 *.tar.gz
 
 # Ignored Python Files
@@ -32,7 +31,6 @@ ENV/
 .env
 .vscode/
 .markdownlint.yaml
-app/Neo4j*.txt
 
 # Ignored Miscellaneous Files
 .DS_Store
