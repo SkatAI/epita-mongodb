@@ -1,4 +1,8 @@
 import pandas as pd
+
+pd.options.display.max_columns = 1000
+pd.options.display.width = 150
+
 import os
 from tqdm import tqdm
 import numpy as np
@@ -41,68 +45,40 @@ def build(fields, some_dict, data):
 
 if __name__ == "__main__":
 
-    # file = './data/les_arbres_upload_1k.csv'
-    file = './data/les_arbres_upload_v02.csv'
     # load the csv file into a dataframe
+    file = './data-local/les_arbres_upload_v02.csv'
     df = pd.read_csv(file)
 
+
+    # make sure duplicates geolocs are included
+    # sort to show geo dups and large trees first. useful for detecting outliers in small sets
+
     df['dim'] = df.height * df.circumference
-    df['geo_dups'] = df['geo_point_2d'].map(df['geo_point_2d'].value_counts())
+    df['geo_dups'] = df['geo_point_2d'].map(
+        df['geo_point_2d'].value_counts()
+    )
 
     df.sort_values(by = ['geo_dups','dim'], ascending=[False, False] , inplace = True)
-    df.reset_index(inplace = True, drop = True)
 
     df.drop(columns= ['geo_dups','dim'], inplace = False)
 
 
-    ## make sure duplicates geolocs are included
+    df['remarkable'] = df.remarkable.apply(lambda d : np.nan if d == 'NON' else d)
 
-    # --------------------------------------------------------
-    # flat schema
-    # --------------------------------------------------------
-    trees = []
-    for i, d in tqdm(df.head(10000).sample(frac = 1).iterrows()):
-        tree = build(df.columns, {}, d)
-        trees.append(tree)
+    cond = ~df['arrondissement'].isin(['BOIS DE BOULOGNE','BOIS DE VINCENNES','HAUTS-DE-SEINE','SEINE-SAINT-DENIS','VAL-DE-MARNE'])
+    df = df[cond].copy()
 
-    output_file = "./data/trees_flat_10K.json"
-    with open(output_file, "w") as f:
-        json.dump(trees, f, indent=4,  ensure_ascii=False)
-
-    # create json filename by replacing .csv with .json
-    # output_file = "./data/trees_flat.json"
-    # with open(output_file, "w") as f:
-    #     json.dump(trees, f, indent=4,  ensure_ascii=False)
-
-    # output_file = "./data/trees_flat_1K.json"
-    # with open(output_file, "w") as f:
-    #     json.dump(trees[:1000], f, indent=4,  ensure_ascii=False)
-
-
-    # output_file = "./data/trees_flat_100.json"
-    # with open(output_file, "w") as f:
-    #     json.dump(trees[:100], f, indent=4,  ensure_ascii=False)
-
-    # convert to ndjson
-
-    # with open("./data/trees_flat.json", "r") as infile, open("trees_flat.ndjson", "w") as outfile:
-    #     data = json.load(infile)
-    #     for item in data:
-    #         outfile.write(json.dumps(item) + "\n")
-
-
+    df.reset_index(inplace = True, drop = True)
 
     # --------------------------------------------------------
     # nested schema
     # --------------------------------------------------------
-    df['remarkable'] = df.remarkable.apply(lambda d : np.nan if d == 'NON' else d)
 
     # fields
-    base_fields = ['idbase', 'domain', 'stage', 'remarkable']
-    location_fields = ['arrondissement', 'suppl_address', 'number', 'address', 'id_location', 'geo_point_2d']
-    metrics_fields = ['height', 'circumference']
+    base_fields = ['idbase', 'domain', 'stage', 'remarkable', 'height', 'circumference']
+    location_fields = [ 'id_location', 'suppl_address', 'number', 'address', 'arrondissement']
+    geo_fields = [ 'geo_point_2d']
     taxonomy_fields = ['name', 'species', 'genre', 'variety']
-
 
     trees_nested = []
     for i, d in tqdm(df.iterrows()):
@@ -110,29 +86,34 @@ if __name__ == "__main__":
 
         tree['location'] = build(location_fields, {}, d)
 
-
-        tree['dimensions'] = build(metrics_fields, {}, d)
+        tree['geo'] = build(geo_fields, {}, d)
 
         tree['taxonomy'] = build(taxonomy_fields, {}, d)
         trees_nested.append(tree)
 
-    # save to
+    # save
 
-    output_file = "./data/trees_nested.json"
+    output_file = "./data/trees.json"
     with open(output_file, "w") as f:
         json.dump(trees_nested, f, indent=4,  ensure_ascii=False)
+    print(f"created {output_file}")
 
-    output_file = "./data/trees_nested_1k.json"
+    output_file = "./data/trees_100.json"
+    with open(output_file, "w") as f:
+        json.dump(trees_nested[:100], f, indent=4,  ensure_ascii=False)
+    print(f"created {output_file}")
+
+    output_file = "./data/trees_1k.json"
     with open(output_file, "w") as f:
         json.dump(trees_nested[:1000], f, indent=4,  ensure_ascii=False)
 
-    output_file = "./data/trees_nested_100.json"
-    with open(output_file, "w") as f:
-        json.dump(trees_nested[:100], f, indent=4,  ensure_ascii=False)
+    print(f"created {output_file}")
 
-    with open("./data/trees_nested.json", "r") as infile, open("trees_nested.ndjson", "w") as outfile:
+    # convert to ndjson (useful for mongoimport and smaller size)
+    print("-- convert to ndjson")
+    with open("./data/trees.json", "r") as infile, open("./data/trees.ndjson", "w") as outfile:
         data = json.load(infile)
-        for item in data:
+        for item in tqdm(data):
             outfile.write(json.dumps(item) + "\n")
 
 
@@ -140,21 +121,76 @@ if __name__ == "__main__":
     # --------------------------------------------------------
     # gardens
     # --------------------------------------------------------
+    print("==")
+    print("Gardens")
 
-    df = pd.read_csv('./data/espaces_verts.csv', sep = ';')
+    df = pd.read_csv('./data-local/espaces_verts.csv', sep = ';')
     df.columns = [clean_string(col) for col in df.columns]
+
+    df.dropna(subset = ['code_postal'], inplace = True )
+
+    df['code_postal'] = df.code_postal.astype(int)
+
+    df.drop(columns= ['last_edited_user', 'last_edited_date', 'url_plan', 'competence'], inplace = True)
+
+    df.rename(columns = {
+        'identifiant_espace_vert': 'identifiant',
+        'nom_de_espace_vert': 'nom', 'typologie_espace_vert': 'typologie', 'presence_cloture': 'cloture', 'ancien_nom_de_espace_vert': 'ancien_nom'},
+        inplace = True
+        )
+
+    df.reset_index(inplace = True, drop = True)
+
+    # fields
+    base_fields = ['nom', 'typologie', 'categorie','cloture','nombre_entites', 'ouverture_24h_24h',]
+    location_fields = [ 'adresse_numero', 'adresse_complement', 'adresse_type_voie', 'adresse_libelle_voie', 'code_postal']
+    surface_fields = [ 'surface_calculee', 'superficie_totale_reelle', 'surface_horticole', 'perimetre' ]
+    history_fields = [ 'annee_de_ouverture', 'annee_de_renovation', 'ancien_nom', 'annee_de_changement_de_nom']
+    geo_fields = [ 'geo_shape', 'geo_point']
+    identification_fields = ['identifiant', 'id_division', 'id_atelier_horticole', 'ida3d_enb', 'site_villes', 'id_eqpt' ]
 
     # jsonsify without nulls
     gardens = []
 
     for i, d in tqdm(df.iterrows()):
         garden = build(df.columns, {}, d)
+
+        garden = build(base_fields, {}, d)
+        garden['id'] = build(identification_fields, {}, d)
+        garden['location'] = build(location_fields, {}, d)
+        garden['surface'] = build(surface_fields, {}, d)
+        garden['history'] = build(history_fields, {}, d)
+        garden['geo'] = build(geo_fields, {}, d)
+
         gardens.append(garden)
 
-    output_file = "./data/gardens_001.json"
+    # convert geo_shape
+    for garden in gardens:
+        garden['geo']['geo_shape'] = json.loads(garden['geo']['geo_shape'])
+
+    output_file = "./data/gardens.json"
     with open(output_file, "w") as f:
         json.dump(gardens, f, indent=4,  ensure_ascii=False)
 
+    print(f"created {output_file}")
 
+
+    output_file = "./data/gardens_100.json"
+    with open(output_file, "w") as f:
+        json.dump(gardens[:100], f, indent=4,  ensure_ascii=False)
+    print(f"created {output_file}")
+
+    output_file = "./data/gardens_1k.json"
+    with open(output_file, "w") as f:
+        json.dump(gardens[:1000], f, indent=4,  ensure_ascii=False)
+
+    print(f"created {output_file}")
+
+    # convert to ndjson (useful for mongoimport and smaller size)
+    print("-- convert to ndjson")
+    with open("./data/gardens.json", "r") as infile, open("./data/gardens.ndjson", "w") as outfile:
+        data = json.load(infile)
+        for item in tqdm(data):
+            outfile.write(json.dumps(item) + "\n")
 
 

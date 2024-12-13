@@ -5,3 +5,4 @@ python-dotenv==1.0.1
 pymongo==4.10.1
 requests
 beautifulsoup4==4.12.3
+tqdm
